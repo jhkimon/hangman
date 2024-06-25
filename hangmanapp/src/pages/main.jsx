@@ -1,14 +1,12 @@
-
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { useParams } from "react-router-dom";
-import Button from "../components/Button";
-import BlankWord from "../components/BlankWord";
-import LetterCard from "../components/LetterCard";
-import ThemeCard from "../components/ThemeCard";
-import ScoreBoard from "../components/ScoreBoard";
-import ProgressBar from "../components/ProgressBar";
-import CategorizedWords from "../components/CategorizedWords";
+import React, { useEffect, useState, useMemo } from 'react';
+import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import BlankWord from '../components/BlankWord';
+import LetterCard from '../components/LetterCard';
+import ThemeCard from '../components/ThemeCard';
+import ScoreBoard from '../components/ScoreBoard';
+import ProgressBar from '../components/ProgressBar';
+import CategorizedWords from '../components/CategorizedWords';
 
 const LetterWrapper = styled.div`
     display: flex;
@@ -17,101 +15,61 @@ const LetterWrapper = styled.div`
     width: 580px;
 `;
 
-function Main() {
+function Main({ score, setScore }) {
     const { theme } = useParams();
     const [id, setId] = useState(0);
     const [attempts, setAttempts] = useState(0);
     const [guessedLetters, setGuessedLetters] = useState([]);
-    const [score, setScore] = useState(0);
-    const [selectedWord, setSelectedWord] = useState("");
+    const wordList = useMemo(() => CategorizedWords[theme].slice(0, 10).map((word) => word.toUpperCase()), [theme]);
+    const currentWord = wordList[id];
 
-    useEffect(() => {
-        if (theme && CategorizedWords[theme]) {
-            const randomWord =
-                CategorizedWords[theme][
-                    Math.floor(Math.random() * CategorizedWords[theme].length)
-                ];
-            setSelectedWord(randomWord.toUpperCase());
-        }
-    }, [theme]);
+    const [alphabet, setAlphabet] = useState(
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
+            letter,
+            isRight: false,
+            isClicked: false,
+        }))
+    );
 
-    const currentWord = letters[id];
+    const checkIfWordGuessed = (word, guessedLetters) => {
+        return word.split('').every((letter) => guessedLetters.includes(letter));
+    };
 
-    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-
-    const handleLetterClick = (char) => {
-        if (currentWord.includes(char)) {
-            setGuessedLetters((prev) => [...prev, char]);
+    const handleLetterBtnClick = (clickedLetter) => {
+        if (currentWord.includes(clickedLetter)) {
+            setGuessedLetters((prev) => [...prev, clickedLetter]);
         } else {
             setAttempts((prev) => prev + 1);
         }
 
         if (attempts + 1 >= 9) {
-            setId((prev) => (prev + 1) % letters.length);
+            setId((prev) => (prev + 1) % wordList.length);
             setAttempts(0);
             setGuessedLetters([]);
-        }
-        if (checkIfWordGuessed(currentWord, guessedLetters)) {
-            setId((prev) => (prev + 1) % letters.length);
+            setAlphabet((prevAlphabet) =>
+                prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
+            );
+        } else if (checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])) {
             setScore(score + 200 - 10 * (attempts + 1));
+            setId((prev) => (prev + 1) % wordList.length);
             setAttempts(0);
             setGuessedLetters([]);
+            setAlphabet((prevAlphabet) =>
+                prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
+            );
+        } else {
+            setAlphabet(
+                alphabet.map((letter) =>
+                    !letter.isClicked && letter.letter === clickedLetter
+                        ? {
+                              ...letter,
+                              isRight: currentWord.includes(clickedLetter),
+                              isClicked: true,
+                          }
+                        : letter
+                )
+            );
         }
-    };
-
-    const checkIfWordGuessed = (word, guessedLetters) => {
-        return word.split('').every((letter) => guessedLetters.includes(letter));
-    const [alphabet, setAlphabet] = useState([
-        { letter: "A", isRight: false, isClicked: false },
-        { letter: "B", isRight: false, isClicked: false },
-        { letter: "C", isRight: false, isClicked: false },
-        { letter: "D", isRight: false, isClicked: false },
-        { letter: "E", isRight: false, isClicked: false },
-        { letter: "F", isRight: false, isClicked: false },
-        { letter: "G", isRight: false, isClicked: false },
-        { letter: "H", isRight: false, isClicked: false },
-        { letter: "I", isRight: false, isClicked: false },
-        { letter: "J", isRight: false, isClicked: false },
-        { letter: "K", isRight: false, isClicked: false },
-        { letter: "L", isRight: false, isClicked: false },
-        { letter: "M", isRight: false, isClicked: false },
-        { letter: "N", isRight: false, isClicked: false },
-        { letter: "O", isRight: false, isClicked: false },
-        { letter: "P", isRight: false, isClicked: false },
-        { letter: "Q", isRight: false, isClicked: false },
-        { letter: "R", isRight: false, isClicked: false },
-        { letter: "S", isRight: false, isClicked: false },
-        { letter: "T", isRight: false, isClicked: false },
-        { letter: "U", isRight: false, isClicked: false },
-        { letter: "V", isRight: false, isClicked: false },
-        { letter: "W", isRight: false, isClicked: false },
-        { letter: "X", isRight: false, isClicked: false },
-        { letter: "Y", isRight: false, isClicked: false },
-        { letter: "Z", isRight: false, isClicked: false },
-    ]);
-
-    useEffect(() => {
-        if (theme && CategorizedWords[theme]) {
-            const randomWord =
-                CategorizedWords[theme][
-                    Math.floor(Math.random() * CategorizedWords[theme].length)
-                ];
-            setSelectedWord(randomWord.toUpperCase());
-        }
-    }, [theme]);
-
-    const handleLetterClick = (clickedLetter) => {
-        setAlphabet(
-            alphabet.map((letter) =>
-                !letter.isClicked && letter.letter === clickedLetter
-                    ? {
-                          ...letter,
-                          isRight: selectedWord.includes(clickedLetter),
-                          isClicked: true,
-                      }
-                    : letter
-            )
-        );
     };
 
     return (
@@ -122,19 +80,15 @@ function Main() {
                     <ThemeCard theme={theme} />
                     <BlankWord letter={currentWord} guessedLetters={guessedLetters} />
                     <LetterWrapper>
-                        {alphabet.map((letter, index) => {
-                            return (
-                                <LetterCard
-                                    key={index}
-                                    letter={letter.letter}
-                                    onClick={() =>
-                                        handleLetterClick(letter.letter)
-                                    }
-                                    isClicked={letter.isClicked}
-                                    isRight={letter.isRight}
-                                />
-                            );
-                        })}
+                        {alphabet.map((letter, index) => (
+                            <LetterCard
+                                key={index}
+                                letter={letter.letter}
+                                onClick={() => handleLetterBtnClick(letter.letter)}
+                                isClicked={letter.isClicked}
+                                isRight={letter.isRight}
+                            />
+                        ))}
                     </LetterWrapper>
                 </div>
                 <div className="w-1/2 flex items-center flex-col">
