@@ -1,5 +1,5 @@
 const CategorizedWords = {
-    countries: [
+    Country: [
         'Argentina',
         'Australia',
         'Brazil',
@@ -21,7 +21,7 @@ const CategorizedWords = {
         'United Kingdom',
         'United States',
     ],
-    foods: [
+    Food: [
         'Pizza',
         'Sushi',
         'Burger',
@@ -43,7 +43,7 @@ const CategorizedWords = {
         'Cheese',
         'Croissant',
     ],
-    SATWords: [
+    Suneung: [
         'Abate',
         'Benevolent',
         'Candid',
