@@ -9,6 +9,7 @@ import ScoreBoard from '../components/ScoreBoard';
 import ProgressBar from '../components/ProgressBar';
 import CategorizedWords from '../components/CategorizedWords';
 
+
 const LetterWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
