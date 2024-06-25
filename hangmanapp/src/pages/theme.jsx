@@ -5,11 +5,11 @@ import Button from '../components/Button'; // 경로 확인
 const themes = ['Food', 'Country', 'Suneung', 'Idol', 'NEXT', 'Random'];
 
 function Theme() {
-    const navigate = useNavigate(); // useNavigate로 교체
+    const navigate = useNavigate();
 
     const handleButtonClick = (theme) => {
         console.log('얍');
-        navigate(`/main/:${theme}`);
+        navigate(`/main/${theme}`);
     };
 
     return (
