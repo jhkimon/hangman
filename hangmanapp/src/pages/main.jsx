@@ -7,6 +7,7 @@ import LetterCard from '../components/LetterCard';
 import ThemeCard from '../components/ThemeCard';
 import ScoreBoard from '../components/ScoreBoard';
 import ProgressBar from '../components/ProgressBar';
+import CategorizedWords from '../components/CategorizedWords';
 
 const LetterWrapper = styled.div`
     display: flex;
@@ -15,11 +16,8 @@ const LetterWrapper = styled.div`
     width: 580px;
 `;
 
-const letters = ['apple', 'bear', 'city', 'dear', 'entity'];
-const themes = { apple: 'NEXT', bear: 'NEXT', city: 'NEXT', dear: 'Idol', entity: 'Food' };
-
-const randomLetter = letters[Math.floor(Math.random() * letters.length)];
-const randomTheme = themes[randomLetter];
+const theme = 'countries';
+const letter = CategorizedWords[theme][Math.floor(Math.random() * CategorizedWords[theme].length)];
 
 function Main() {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -45,7 +43,6 @@ function Main() {
                     />
                 </div>
             </div>
-            ƒ{' '}
         </div>
     );
 }
