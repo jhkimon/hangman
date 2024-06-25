@@ -164,15 +164,14 @@ function Main({ score, setScore }) {
     const [attempts, setAttempts] = useState(1);
     const [guessedLetters, setGuessedLetters] = useState([]);
     const wordList = useMemo(() => {
-      const words = CategorizedWords[theme];
-      const wordsToUse = theme === 'NEXT' ? shuffleArray(words).slice(0, 38) : words;
-      const shuffledWords = shuffleArray(wordsToUse).slice(0, 10);
-      return shuffledWords.map((word) => word.toUpperCase());
-  }, [theme]);
+        const words = CategorizedWords[theme];
+        const wordsToUse = theme === 'NEXT' ? shuffleArray(words).slice(0, 38) : words;
+        const shuffledWords = shuffleArray(wordsToUse).slice(0, 10);
+        return shuffledWords.map((word) => word.toUpperCase());
+    }, [theme]);
     const currentWord = wordList[id];
     const [ifShowBtnToNext, setIfShowBtnToNext] = useState(false);
     const [ifShowRightModal, setIfShowRightModal] = useState(null); // -1을 null로 변경
-    console.log(currentWord);
     const [alphabet, setAlphabet] = useState(
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
             letter,
@@ -191,11 +190,9 @@ function Main({ score, setScore }) {
     const handleLetterBtnClick = (clickedLetter) => {
         if (currentWord.includes(clickedLetter)) {
             correctaudio.play();
-            console.log('correct');
             setGuessedLetters((prev) => [...prev, clickedLetter]);
         } else {
             wrongaudio.play();
-            console.log('wrong');
             setAttempts((prev) => prev + 1);
         }
         if (attempts >= 9) {

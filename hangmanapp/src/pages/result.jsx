@@ -4,11 +4,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 
-function Result({score, theme}) {
+function Result({ score, theme }) {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
-        console.log('얍');
         navigate('/');
     };
     return (
