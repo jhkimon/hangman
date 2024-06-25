@@ -13,10 +13,6 @@ module.exports = {
             fontFamily: {
                 kalam: ['Kalam', 'cursive'],
             },
-            theme: {
-                extend: {},
-            },
-            plugins: [],
         },
     },
     plugins: [],

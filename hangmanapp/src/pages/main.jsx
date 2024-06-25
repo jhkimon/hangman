@@ -13,6 +13,15 @@ const LetterWrapper = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     width: 580px;
+    margin: 3%;
+`;
+
+const BlankWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 600px;
+    margin: 1%;
 `;
 
 function Main({ score, setScore }) {
@@ -43,12 +52,14 @@ function Main({ score, setScore }) {
         }
 
         if (attempts + 1 >= 9) {
+            // 실패
             setId((prev) => (prev + 1) % wordList.length);
             setAttempts(0);
             setGuessedLetters([]);
             setAlphabet((prevAlphabet) =>
                 prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
             );
+            // 성공
         } else if (checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])) {
             setScore(score + 200 - 10 * (attempts + 1));
             setId((prev) => (prev + 1) % wordList.length);
@@ -78,7 +89,9 @@ function Main({ score, setScore }) {
             <div className="container flex mt-24">
                 <div className="w-1/2 flex items-center flex-col">
                     <ThemeCard theme={theme} />
-                    <BlankWord letter={currentWord} guessedLetters={guessedLetters} />
+                    <BlankWrapper>
+                        <BlankWord letter={currentWord} guessedLetters={guessedLetters} />
+                    </BlankWrapper>
                     <LetterWrapper>
                         {alphabet.map((letter, index) => (
                             <LetterCard
