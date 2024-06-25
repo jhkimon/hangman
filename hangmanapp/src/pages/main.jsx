@@ -22,6 +22,7 @@ function Main({ score, setScore }) {
     const [guessedLetters, setGuessedLetters] = useState([]);
     const wordList = useMemo(() => CategorizedWords[theme].slice(0, 10).map((word) => word.toUpperCase()), [theme]);
     const currentWord = wordList[id];
+    const [ifShowBtnToNext, setIfShowBtnToNext] = useState(false);
     console.log(currentWord);
     const [alphabet, setAlphabet] = useState(
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
@@ -44,21 +45,17 @@ function Main({ score, setScore }) {
             setAttempts((prev) => prev + 1);
         }
 
-        if (attempts >= 9) {
-            setId((prev) => (prev + 1) % wordList.length);
-            setAttempts(1);
-            setGuessedLetters([]);
+        if (attempts >= 9) {           
             setAlphabet((prevAlphabet) =>
                 prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
             );
+            setIfShowBtnToNext(true);
         } else if (checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])) {
             setScore(score + 200 - 10 * (attempts + 1));
-            setId((prev) => (prev + 1) % wordList.length);
-            setAttempts(1);
-            setGuessedLetters([]);
             setAlphabet((prevAlphabet) =>
                 prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
             );
+            setIfShowBtnToNext(true);
         } else {
             setAlphabet(
                 alphabet.map((letter) =>
@@ -73,6 +70,13 @@ function Main({ score, setScore }) {
             );
         }
     };
+
+    const handleNextBtnClick = () => {
+        setId((prev) => (prev + 1) % wordList.length);
+        setAttempts(1);
+        setGuessedLetters([]);
+        setIfShowBtnToNext(false);
+    }
 
     return (
         <div className="container mx-auto p-10">
@@ -96,9 +100,19 @@ function Main({ score, setScore }) {
                 <div className="w-1/2 flex items-center flex-col">
                     <ScoreBoard score={score} />
                     <img
-                        src={'https://via.placeholder.com/240x' + (240 + attempts * 20)}
+                        src={`/img/hangman${attempts - 1}.png`}
                         alt="hangman"
                     />
+                    {
+                        ifShowBtnToNext && (
+                            <button
+                                className="mt-5 p-2 bg-green-500 text-white font-bold rounded-md"
+                                onClick={() => handleNextBtnClick()}
+                            >
+                                Next
+                            </button>
+                        )
+                    }
                 </div>
             </div>
         </div>
