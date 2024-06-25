@@ -5,7 +5,7 @@ import setTheme from '../App';
 import ClickAudio1 from '../audio/poka01.mp3';
 
 const clickaudio1 = new Audio(ClickAudio1);
-const themes = ['Food', 'Country', 'Suneung', 'Idol', 'NEXT', 'Random'];
+const themes = ['Food', 'Country', 'Suneung', 'Idol', 'NEXT'];
 
 function Theme() {
     const navigate = useNavigate();
