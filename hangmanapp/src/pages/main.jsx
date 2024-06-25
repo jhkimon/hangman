@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
 import BlankWord from '../components/BlankWord';
 import LetterCard from '../components/LetterCard';
@@ -17,10 +17,20 @@ const wrongaudio = new Audio(WrongAudio);
 const correct = new Audio(Correct);
 const wrong = new Audio(Wrong);
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: #fcfcfc;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+`;
+
 const Container = styled.div`
     max-width: 1200px;
     margin: 0 auto;
     padding: 10px;
+    background-color: #fcfcfc;
 `;
 
 const ContentWrapper = styled.div`
@@ -171,6 +181,12 @@ function Main({ score, setScore }) {
             <ProgressBar progress={(id + 1) * 10} />
             <ContentWrapper>
                 <LeftColumn>
+                    <ScoreBoard score={score} />
+                    <ImageWrapper>
+                        <img src={`/img/hangman${attempts - 1}.png`} alt="hangman" width="50%" />
+                    </ImageWrapper>
+                </LeftColumn>
+                <RightColumn>
                     <ThemeCard theme={theme} />
                     <BlankWrapper>
                         <BlankWord letter={currentWord} guessedLetters={guessedLetters} />
@@ -187,12 +203,6 @@ function Main({ score, setScore }) {
                             />
                         ))}
                     </LetterWrapper>
-                </LeftColumn>
-                <RightColumn>
-                    <ScoreBoard score={score} />
-                    <ImageWrapper>
-                        <img src={`/img/hangman${attempts - 1}.png`} alt="hangman" />
-                    </ImageWrapper>
                 </RightColumn>
             </ContentWrapper>
             {ifShowBtnToNext && <NextButton onClick={() => handleNextBtnClick()}>Next</NextButton>}
