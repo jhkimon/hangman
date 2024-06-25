@@ -14,18 +14,18 @@ const LetterWrapper = styled.div`
     width: 600px;
 `;
 
-const letter = 'apple';
-const theme = 'NEXT';
+const letters = ['apple', 'bear', 'city', 'dear', 'entity'];
+const themes = { apple: 'NEXT', bear: 'NEXT', city: 'NEXT', dear: 'Idol', entity: 'Food' };
+
+const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+const randomTheme = themes[randomLetter];
 
 function Main() {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     return (
         <div>
-            <ThemeCard theme={theme} />
-            <BlankWord letter={letter} />
-            <LetterCard />
-            <ThemeCard />
-            <BlankWord />
+            <ThemeCard theme={randomTheme} />
+            <BlankWord letter={randomLetter} />
             <LetterWrapper>
                 {alphabet.map((letter, index) => {
                     return letter ? <LetterCard key={index} letter={letter} /> : null;
