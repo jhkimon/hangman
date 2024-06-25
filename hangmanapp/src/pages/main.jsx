@@ -83,6 +83,7 @@ const LetterWrapper = styled.div`
     width: 100%;
     margin: 3%;
 `;
+
 function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
 }
@@ -161,7 +162,7 @@ const WrongModal = styled.div`
 function Main({ score, setScore }) {
     const { theme } = useParams();
     const [id, setId] = useState(0);
-    const [attempts, setAttempts] = useState(1);
+    const [attempts, setAttempts] = useState(0);
     const [guessedLetters, setGuessedLetters] = useState([]);
     const wordList = useMemo(() => {
         const words = CategorizedWords[theme];
@@ -180,6 +181,19 @@ function Main({ score, setScore }) {
         }))
     );
 
+    useEffect(() => {
+        console.log(attempts)
+        if (attempts >= 9) {
+            setIfShowBtnToNext(true);
+            setIfShowRightModal(0);
+            wrong.play();
+        } else if (checkIfWordGuessed(currentWord, guessedLetters)) {
+            setIfShowBtnToNext(true);
+            setIfShowRightModal(1);
+            correct.play();
+        }
+    }, [attempts, guessedLetters, currentWord]);
+
     const checkIfWordGuessed = (word, guessedLetters) => {
         return word
             .split('')
@@ -193,28 +207,22 @@ function Main({ score, setScore }) {
             setGuessedLetters((prev) => [...prev, clickedLetter]);
         } else {
             wrongaudio.play();
-            setAttempts((prev) => prev + 1);
+            setAttempts((prevAttempts) => prevAttempts + 1);
         }
-        if (attempts >= 9) {
-            setIfShowBtnToNext(true);
-            setIfShowRightModal(0);
-        } else if (attempts < 9 && checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])) {
-            setIfShowBtnToNext(true);
-            setIfShowRightModal(1);
-        } else {
-            setAlphabet(
-                alphabet.map((letter) =>
-                    !letter.isClicked && letter.letter === clickedLetter
-                        ? {
-                              ...letter,
-                              isRight: currentWord.includes(clickedLetter),
-                              isClicked: true,
-                          }
-                        : letter
-                )
-            );
-        }
+
+        setAlphabet(
+            alphabet.map((letter) =>
+                !letter.isClicked && letter.letter === clickedLetter
+                    ? {
+                          ...letter,
+                          isRight: currentWord.includes(clickedLetter),
+                          isClicked: true,
+                      }
+                    : letter
+            )
+        );
     };
+
     const navigate = useNavigate();
 
     const handleNextBtnClick = () => {
@@ -222,10 +230,10 @@ function Main({ score, setScore }) {
             setScore(score + 200 - 10 * attempts);
         }
         setId((prev) => (prev + 1) % wordList.length);
-        setAttempts(1);
+        setAttempts(0);
         setGuessedLetters([]);
         setIfShowBtnToNext(false);
-        if (id == 9) {
+        if (id === 9) {
             navigate('/result');
         }
         setIfShowRightModal(null); // 모달 상태 초기화
@@ -247,7 +255,7 @@ function Main({ score, setScore }) {
                 <LeftColumn>
                     <ScoreBoard score={score} />
                     <ImageWrapper>
-                        <img src={`/img/hangman${attempts - 1}.png`} alt="hangman" width="50%" />
+                        <img src={`/img/hangman${attempts}.png`} alt="hangman" width="50%" />
                     </ImageWrapper>
                 </LeftColumn>
                 <RightColumn>
@@ -269,7 +277,7 @@ function Main({ score, setScore }) {
                     </LetterWrapper>
                 </RightColumn>
             </ContentWrapper>
-            {ifShowBtnToNext && <NextButton onClick={() => handleNextBtnClick()}>Next</NextButton>}
+            {ifShowBtnToNext && <NextButton onClick={handleNextBtnClick}>Next</NextButton>}
         </Container>
     );
 }
