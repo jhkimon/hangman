@@ -104,6 +104,7 @@ function Main({ score, setScore }) {
                                 onClick={() => handleLetterBtnClick(letter.letter)}
                                 isClicked={letter.isClicked}
                                 isRight={letter.isRight}
+                                ifShow={ifShowBtnToNext}
                             />
                         ))}
                     </LetterWrapper>
