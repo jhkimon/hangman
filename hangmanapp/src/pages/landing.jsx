@@ -39,7 +39,6 @@ function Landing() {
         >
             <h1 className="font-kalam font-black tracking-tighter text-center text-6xl mt-10">Hangman</h1>
             <img src={`${process.env.PUBLIC_URL}/img/hangman9.png`} className="w-96" alt="Hangman Image" />{' '}
-
             <div className="flex flex-row items-center space-x-4 mt-5">
                 <Button onClick={handleButtonClick} letter="Game Start" />
                 <Button onClick={showRule} letter="Game Rules" />
