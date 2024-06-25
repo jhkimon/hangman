@@ -13,6 +13,9 @@ module.exports = {
             fontFamily: {
                 kalam: ['Kalam', 'cursive'],
             },
+            width: {
+                120: '30rem', // 사용자 정의 크기 추가
+            },
         },
     },
     plugins: [],
