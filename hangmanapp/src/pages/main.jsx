@@ -23,6 +23,9 @@ const LetterWrapper = styled.div`
     width: 580px;
     margin: 3%;
 `;
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
 
 const BlankWrapper = styled.div`
     display: flex;
@@ -37,7 +40,12 @@ function Main({ score, setScore }) {
     const [id, setId] = useState(0);
     const [attempts, setAttempts] = useState(1);
     const [guessedLetters, setGuessedLetters] = useState([]);
-    const wordList = useMemo(() => CategorizedWords[theme].slice(0, 10).map((word) => word.toUpperCase()), [theme]);
+    const wordList = useMemo(() => {
+      const words = CategorizedWords[theme];
+      const shuffledWords = shuffleArray(words).slice(0, 10);
+      console.log(shuffledWords);
+      return shuffledWords.map((word) => word.toUpperCase());
+  }, [theme]);
     const currentWord = wordList[id];
     const [ifShowBtnToNext, setIfShowBtnToNext] = useState(false);
     console.log(currentWord);
@@ -55,9 +63,11 @@ function Main({ score, setScore }) {
 
     const handleLetterBtnClick = (clickedLetter) => {
         if (currentWord.includes(clickedLetter)) {
+          correctaudio.play();
             console.log('correct');
             setGuessedLetters((prev) => [...prev, clickedLetter]);
         } else {
+          wrongaudio.play();
             console.log('wrong');
             setAttempts((prev) => prev + 1);
         }
