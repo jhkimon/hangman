@@ -10,7 +10,6 @@ const Malatang = styled.button`
 
 function Button(props) {
     return <Malatang onClick={props.onClick}>{props.letter}</Malatang>;
-
 }
 
 export default Button;
