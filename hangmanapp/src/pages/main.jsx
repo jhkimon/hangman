@@ -7,7 +7,15 @@ import ThemeCard from '../components/ThemeCard';
 import ScoreBoard from '../components/ScoreBoard';
 import ProgressBar from '../components/ProgressBar';
 import CategorizedWords from '../components/CategorizedWords';
+import CorrectAudio from '../audio/correct_answer2.mp3';
+import WrongAudio from '../audio/blip02.mp3';
+import Correct from '../audio/correct_answer3.mp3';
+import Wrong from '../audio/99770E4A5CDE91EE18.mp3';
 
+const correctaudio = new Audio(CorrectAudio);
+const wrongaudio = new Audio(WrongAudio);
+const correct = new Audio(Correct);
+const wrong = new Audio(Wrong);
 const LetterWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -37,9 +45,11 @@ function Main({ score, setScore }) {
 
     const handleLetterBtnClick = (clickedLetter) => {
         if (currentWord.includes(clickedLetter)) {
+          correctaudio.play();
             console.log('correct')
             setGuessedLetters((prev) => [...prev, clickedLetter]);
         } else {
+          wrongaudio.play();
             console.log('wrong')
             setAttempts((prev) => prev + 1);
         }
