@@ -2,13 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button'; // 경로 확인
 
-const themes = ['Food', 'Country', 'Suneung', 'Idol', 'NEXT'];
+const themes = ['Food', 'Country', 'Suneung', 'Idol', 'NEXT', 'Random'];
 
 function Theme() {
     const navigate = useNavigate(); // useNavigate로 교체
 
     const handleButtonClick = (theme) => {
-        navigate(`/main/${theme}`);
+        console.log('얍');
+        navigate(`/main/:${theme}`);
     };
 
     return (
