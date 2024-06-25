@@ -164,11 +164,11 @@ function Main({ score, setScore }) {
     const [attempts, setAttempts] = useState(1);
     const [guessedLetters, setGuessedLetters] = useState([]);
     const wordList = useMemo(() => {
-        const words = CategorizedWords[theme];
-        const shuffledWords = shuffleArray(words).slice(0, 10);
-        console.log(shuffledWords);
-        return shuffledWords.map((word) => word.toUpperCase());
-    }, [theme]);
+      const words = CategorizedWords[theme];
+      const wordsToUse = theme === 'NEXT' ? shuffleArray(words).slice(0, 38) : words;
+      const shuffledWords = shuffleArray(wordsToUse).slice(0, 10);
+      return shuffledWords.map((word) => word.toUpperCase());
+  }, [theme]);
     const currentWord = wordList[id];
     const [ifShowBtnToNext, setIfShowBtnToNext] = useState(false);
     const [ifShowRightModal, setIfShowRightModal] = useState(null); // -1을 null로 변경
