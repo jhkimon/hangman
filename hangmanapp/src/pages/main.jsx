@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
@@ -18,6 +19,48 @@ const LetterWrapper = styled.div`
 
 function Main() {
     const { theme } = useParams();
+    const [id, setId] = useState(0);
+    const [attempts, setAttempts] = useState(0);
+    const [guessedLetters, setGuessedLetters] = useState([]);
+    const [score, setScore] = useState(0);
+    const [selectedWord, setSelectedWord] = useState("");
+
+    useEffect(() => {
+        if (theme && CategorizedWords[theme]) {
+            const randomWord =
+                CategorizedWords[theme][
+                    Math.floor(Math.random() * CategorizedWords[theme].length)
+                ];
+            setSelectedWord(randomWord.toUpperCase());
+        }
+    }, [theme]);
+
+    const currentWord = letters[id];
+
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+    const handleLetterClick = (char) => {
+        if (currentWord.includes(char)) {
+            setGuessedLetters((prev) => [...prev, char]);
+        } else {
+            setAttempts((prev) => prev + 1);
+        }
+
+        if (attempts + 1 >= 9) {
+            setId((prev) => (prev + 1) % letters.length);
+            setAttempts(0);
+            setGuessedLetters([]);
+        }
+        if (checkIfWordGuessed(currentWord, guessedLetters)) {
+            setId((prev) => (prev + 1) % letters.length);
+            setScore(score + 200 - 10 * (attempts + 1));
+            setAttempts(0);
+            setGuessedLetters([]);
+        }
+    };
+
+    const checkIfWordGuessed = (word, guessedLetters) => {
+        return word.split('').every((letter) => guessedLetters.includes(letter));
     const [alphabet, setAlphabet] = useState([
         { letter: "A", isRight: false, isClicked: false },
         { letter: "B", isRight: false, isClicked: false },
@@ -46,8 +89,6 @@ function Main() {
         { letter: "Y", isRight: false, isClicked: false },
         { letter: "Z", isRight: false, isClicked: false },
     ]);
-    const [selectedWord, setSelectedWord] = useState("");
-    const [score, setScore] = useState(300);
 
     useEffect(() => {
         if (theme && CategorizedWords[theme]) {
@@ -75,11 +116,11 @@ function Main() {
 
     return (
         <div className="container mx-auto p-10">
-            <ProgressBar progress={10} />
+            <ProgressBar progress={(id + 1) * 10} />
             <div className="container flex mt-24">
                 <div className="w-1/2 flex items-center flex-col">
                     <ThemeCard theme={theme} />
-                    <BlankWord letter={selectedWord} alphabet={alphabet}/>
+                    <BlankWord letter={currentWord} guessedLetters={guessedLetters} />
                     <LetterWrapper>
                         {alphabet.map((letter, index) => {
                             return (
