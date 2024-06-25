@@ -55,15 +55,14 @@ function Main({ score, setScore }) {
 
     const handleLetterBtnClick = (clickedLetter) => {
         if (currentWord.includes(clickedLetter)) {
-          correctaudio.play();
-            console.log('correct')
+            console.log('correct');
             setGuessedLetters((prev) => [...prev, clickedLetter]);
         } else {
-          wrongaudio.play();
-            console.log('wrong')
+            console.log('wrong');
             setAttempts((prev) => prev + 1);
         }
-        if (attempts >= 9) {           
+
+        if (attempts >= 9) {
             setAlphabet((prevAlphabet) =>
                 prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
             );
@@ -79,10 +78,10 @@ function Main({ score, setScore }) {
                 alphabet.map((letter) =>
                     !letter.isClicked && letter.letter === clickedLetter
                         ? {
-                            ...letter,
-                            isRight: currentWord.includes(clickedLetter),
-                            isClicked: true,
-                        }
+                              ...letter,
+                              isRight: currentWord.includes(clickedLetter),
+                              isClicked: true,
+                          }
                         : letter
                 )
             );
@@ -94,7 +93,7 @@ function Main({ score, setScore }) {
         setAttempts(1);
         setGuessedLetters([]);
         setIfShowBtnToNext(false);
-    }
+    };
 
     return (
         <div className="container mx-auto p-10">
@@ -113,26 +112,22 @@ function Main({ score, setScore }) {
                                 onClick={() => handleLetterBtnClick(letter.letter)}
                                 isClicked={letter.isClicked}
                                 isRight={letter.isRight}
+                                ifShow={ifShowBtnToNext}
                             />
                         ))}
                     </LetterWrapper>
                 </div>
                 <div className="w-1/2 flex items-center flex-col">
                     <ScoreBoard score={score} />
-                    <img
-                        src={`/img/hangman${attempts - 1}.png`}
-                        alt="hangman"
-                    />
-                    {
-                        ifShowBtnToNext && (
-                            <button
-                                className="mt-5 p-2 bg-green-500 text-white font-bold rounded-md"
-                                onClick={() => handleNextBtnClick()}
-                            >
-                                Next
-                            </button>
-                        )
-                    }
+                    <img src={`/img/hangman${attempts - 1}.png`} alt="hangman" />
+                    {ifShowBtnToNext && (
+                        <button
+                            className="mt-5 p-2 bg-green-500 text-white font-bold rounded-md"
+                            onClick={() => handleNextBtnClick()}
+                        >
+                            Next
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
