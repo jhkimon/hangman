@@ -28,8 +28,8 @@ function Main() {
             <ProgressBar progress={10} />
             <div className="container flex mt-24">
                 <div className="w-1/2 flex items-center flex-col">
-                    <ThemeCard theme={randomTheme} />
-                    <BlankWord letter={randomLetter} />
+                    <ThemeCard theme={theme} />
+                    <BlankWord letter={letter} />
                     <LetterWrapper>
                         {alphabet.map((letter, index) => {
                             return letter ? <LetterCard key={index} letter={letter} /> : null;
