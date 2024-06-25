@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import BlankWord from '../components/BlankWord';
 import LetterCard from '../components/LetterCard';
 import ThemeCard from '../components/ThemeCard';
@@ -16,11 +16,61 @@ const correctaudio = new Audio(CorrectAudio);
 const wrongaudio = new Audio(WrongAudio);
 const correct = new Audio(Correct);
 const wrong = new Audio(Wrong);
+
+const Container = styled.div`
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+`;
+
+const ContentWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+`;
+
+const LeftColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    @media (min-width: 768px) {
+        width: 48%;
+    }
+`;
+
+const RightColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+    @media (min-width: 768px) {
+        width: 48%;
+    }
+`;
+
+const ImageWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+`;
+
 const LetterWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 580px;
+    width: 100%;
     margin: 3%;
 `;
 
@@ -28,8 +78,25 @@ const BlankWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 600px;
+    width: 100%;
     margin: 1%;
+`;
+
+const NextButton = styled.button`
+    margin: 1% 5%;
+    padding: 10px 20px;
+    background-color: #48bb78;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 90%;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #2f855a;
+    }
 `;
 
 function Main({ score, setScore }) {
@@ -87,19 +154,23 @@ function Main({ score, setScore }) {
             );
         }
     };
+    const navigate = useNavigate();
 
     const handleNextBtnClick = () => {
         setId((prev) => (prev + 1) % wordList.length);
         setAttempts(1);
         setGuessedLetters([]);
         setIfShowBtnToNext(false);
+        if (id == 9) {
+            navigate('/result');
+        }
     };
 
     return (
-        <div className="container mx-auto p-10">
+        <Container>
             <ProgressBar progress={(id + 1) * 10} />
-            <div className="container flex mt-24">
-                <div className="w-1/2 flex items-center flex-col">
+            <ContentWrapper>
+                <LeftColumn>
                     <ThemeCard theme={theme} />
                     <BlankWrapper>
                         <BlankWord letter={currentWord} guessedLetters={guessedLetters} />
@@ -116,21 +187,16 @@ function Main({ score, setScore }) {
                             />
                         ))}
                     </LetterWrapper>
-                </div>
-                <div className="w-1/2 flex items-center flex-col">
+                </LeftColumn>
+                <RightColumn>
                     <ScoreBoard score={score} />
-                    <img src={`/img/hangman${attempts - 1}.png`} alt="hangman" />
-                    {ifShowBtnToNext && (
-                        <button
-                            className="mt-5 p-2 bg-green-500 text-white font-bold rounded-md"
-                            onClick={() => handleNextBtnClick()}
-                        >
-                            Next
-                        </button>
-                    )}
-                </div>
-            </div>
-        </div>
+                    <ImageWrapper>
+                        <img src={`/img/hangman${attempts - 1}.png`} alt="hangman" />
+                    </ImageWrapper>
+                </RightColumn>
+            </ContentWrapper>
+            {ifShowBtnToNext && <NextButton onClick={() => handleNextBtnClick()}>Next</NextButton>}
+        </Container>
     );
 }
 
