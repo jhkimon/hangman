@@ -29,7 +29,6 @@ function Landing() {
 
     const handleButtonClick = () => {
         clickaudio1.play();
-        console.log('얍');
         navigate('/theme');
     };
 

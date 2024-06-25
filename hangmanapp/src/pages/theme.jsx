@@ -8,10 +8,9 @@ const themes = ['Food', 'Country', 'Suneung', 'Idol', 'NEXT'];
 
 function Theme({ theme, setTheme, setScore }) {
     const navigate = useNavigate();
-    console.log(theme, setTheme, setScore);
     const handleButtonClick = (theme) => {
         clickaudio1.play();
-        setScore(0); // Reset score on theme change
+        setScore(0);
         setTheme(theme);
         navigate(`/main/${theme}`);
     };
