@@ -7,6 +7,8 @@ import LetterCard from '../components/LetterCard';
 import ThemeCard from '../components/ThemeCard';
 import ScoreBoard from '../components/ScoreBoard';
 import ProgressBar from '../components/ProgressBar';
+import CategorizedWords from '../components/CategorizedWords';
+
 
 const LetterWrapper = styled.div`
     display: flex;
@@ -15,8 +17,8 @@ const LetterWrapper = styled.div`
     width: 580px;
 `;
 
-const letter = 'apple';
-const theme = 'NEXT';
+const theme = 'countries';
+const letter = CategorizedWords[theme][Math.floor(Math.random() * CategorizedWords[theme].length)];
 
 function Main() {
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
