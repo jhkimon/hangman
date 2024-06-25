@@ -1,7 +1,6 @@
-
 import './App.css';
 import './logo.svg';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './pages/landing';
 import Theme from './pages/theme';
 import Main from './pages/main';
@@ -14,7 +13,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Landing />} />
                     <Route path="/theme" element={<Theme />} />
-                    <Route path="/main" element={<Main />} />
+                    <Route path="/main/:theme" element={<Main />} />
                     <Route path="/result" element={<Result />} />
                 </Routes>
             </BrowserRouter>

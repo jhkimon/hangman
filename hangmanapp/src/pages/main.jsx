@@ -7,6 +7,8 @@ import LetterCard from '../components/LetterCard';
 import ThemeCard from '../components/ThemeCard';
 import ScoreBoard from '../components/ScoreBoard';
 import ProgressBar from '../components/ProgressBar';
+import CategorizedWords from '../components/CategorizedWords';
+import { useParams } from 'react-router-dom';
 
 const LetterWrapper = styled.div`
     display: flex;
@@ -15,13 +17,10 @@ const LetterWrapper = styled.div`
     width: 580px;
 `;
 
-const letters = ['apple', 'bear', 'city', 'dear', 'entity'];
-const themes = { apple: 'NEXT', bear: 'NEXT', city: 'NEXT', dear: 'Idol', entity: 'Food' };
-
-const randomLetter = letters[Math.floor(Math.random() * letters.length)];
-const randomTheme = themes[randomLetter];
-
 function Main() {
+    const { theme } = useParams();
+    console.log(theme);
+    const letter = CategorizedWords[theme][Math.floor(Math.random() * CategorizedWords[theme].length)];
     const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     const [score, setScore] = useState(300);
     return (
