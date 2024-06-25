@@ -8,7 +8,7 @@ function BlankWord(props) {
                 {strArr.map((charElem, index) => {
                     return (
                         <span className="w-8 p-2 m-2 border-b-4 border-stone-500">
-                            {charElem == ' ' ? (
+                            {charElem == '' ? (
                                 <span className="font-extrabold text-2xl text-stone-900"></span>
                             ) : (
                                 <span className="font-extrabold text-2xl text-stone-900">{charElem}</span>
