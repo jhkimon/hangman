@@ -10,14 +10,12 @@ function GameRule({ isOpen, onRequestClose }) {
             ariaHideApp={false}
             onRequestClose={onRequestClose}
             overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
-            className="bg-white p-8 rounded-lg max-w-3xl w-full mx-4"
+            className="bg-white p-8 rounded-lg max-w-3xl w-full mx-4 overflow-y-auto max-h-full"
         >
             <div className="flex flex-col justify-center items-center">
-                <img src={img} className="w-40 mb-5" /> {/* 이미지 아래에 마진 추가 */}
+                <img src={img} className="w-40 mb-5" alt="Game Rules" /> {/* 이미지 아래에 마진 추가 */}
                 <h2 className="text-center text-5xl font-extrabold mt-5">Game Rules</h2>
                 <div className="text-center text-2xl mt-5 mx-8">
-                    {' '}
-                    {/* 텍스트에 양쪽 마진 추가 */}
                     <p>A word related to the chosen topic will be given.</p>
                     <p className="mt-4">
                         Guess the letters to fill in the blanks and complete the word to win. If you choose an incorrect
@@ -29,7 +27,7 @@ function GameRule({ isOpen, onRequestClose }) {
                 </div>
                 <Button
                     onClick={onRequestClose}
-                    className="text-center text-2xl border-2 flex justify-center items-center p-2 mt-12" // 마진을 더 넓게 설정
+                    className="text-center text-2xl border-2 flex justify-center items-center p-2 mt-12 hover:bg-gray-100"
                     letter="Close"
                 />
             </div>
