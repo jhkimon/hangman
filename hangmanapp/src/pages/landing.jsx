@@ -4,15 +4,20 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import GameRule from '../components/GameRule';
+import ClickAudio1 from '../audio/select01.mp3';
+import ClickAudio2 from '../audio/select06.mp3';
 
+const clickaudio1 = new Audio(ClickAudio1);
+const clickaudio2= new Audio(ClickAudio2);
 function Landing() {
     const [modal, setModal] = useState(false);
     const showRule = () => {
+        clickaudio2.play();
         setModal(!modal);
     };
     const navigate = useNavigate();
-
     const handleButtonClick = () => {
+        clickaudio1.play();
         console.log('얍');
         navigate('/theme');
     };
