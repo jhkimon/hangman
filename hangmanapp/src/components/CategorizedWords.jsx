@@ -87,7 +87,7 @@ const CategorizedWords = {
         'Itzy',
         'Beast',
     ],
-    Next: [
+    NEXT: [
         'Sua',
         'Dong Hyeok',
         'Tae Gyun',
