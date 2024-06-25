@@ -54,25 +54,16 @@ function Main({ score, setScore }) {
             setAttempts((prev) => prev + 1);
         }
 
-        if (attempts >= 9) {
-            setAlphabet((prevAlphabet) =>
-                prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
-            );
-            setIfShowBtnToNext(true);
-        } else if (checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])) {
-            setScore(score + 200 - 10 * (attempts + 1));
-            setAlphabet((prevAlphabet) =>
-                prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
-            );
+        if (attempts >= 9 || checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])) {
             setIfShowBtnToNext(true);
         } else {
             setAlphabet(
                 alphabet.map((letter) =>
                     !letter.isClicked && letter.letter === clickedLetter
                         ? {
-                              ...letter,
-                              isRight: currentWord.includes(clickedLetter),
-                              isClicked: true,
+                            ...letter,
+                            isRight: currentWord.includes(clickedLetter),
+                            isClicked: true,
                           }
                         : letter
                 )
@@ -81,10 +72,20 @@ function Main({ score, setScore }) {
     };
 
     const handleNextBtnClick = () => {
+        if (checkIfWordGuessed(currentWord, guessedLetters)) {
+            setScore(score + 200 - 10 * attempts);
+        }
         setId((prev) => (prev + 1) % wordList.length);
         setAttempts(1);
         setGuessedLetters([]);
         setIfShowBtnToNext(false);
+        setAlphabet(
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
+                letter,
+                isRight: false,
+                isClicked: false,
+            }))
+        );
     };
 
     return (
@@ -115,7 +116,7 @@ function Main({ score, setScore }) {
                     {ifShowBtnToNext && (
                         <button
                             className="mt-5 p-2 bg-green-500 text-white font-bold rounded-md"
-                            onClick={() => handleNextBtnClick()}
+                            onClick={handleNextBtnClick}
                         >
                             Next
                         </button>
