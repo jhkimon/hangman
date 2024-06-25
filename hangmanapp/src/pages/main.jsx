@@ -84,7 +84,7 @@ const LetterWrapper = styled.div`
     margin: 3%;
 `;
 function shuffleArray(array) {
-  return array.sort(() => Math.random() - 0.5);
+    return array.sort(() => Math.random() - 0.5);
 }
 
 const BlankWrapper = styled.div`
@@ -139,7 +139,7 @@ const WrongModal = styled.div`
     &:before,
     &:after {
         position: absolute;
-        content: " ";
+        content: ' ';
         height: 600px;
         width: 10px;
         background-color: blue;
@@ -165,7 +165,7 @@ function Main({ score, setScore }) {
     const [guessedLetters, setGuessedLetters] = useState([]);
     const wordList = useMemo(() => {
       const words = CategorizedWords[theme];
-      const wordsToUse = theme === 'NEXT' ? shuffleArray(words).slice(0, 40) : words;
+      const wordsToUse = theme === 'NEXT' ? shuffleArray(words).slice(0, 38) : words;
       const shuffledWords = shuffleArray(wordsToUse).slice(0, 10);
       return shuffledWords.map((word) => word.toUpperCase());
   }, [theme]);
@@ -174,7 +174,7 @@ function Main({ score, setScore }) {
     const [ifShowRightModal, setIfShowRightModal] = useState(null); // -1을 null로 변경
     console.log(currentWord);
     const [alphabet, setAlphabet] = useState(
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => ({
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
             letter,
             isRight: false,
             isClicked: false,
@@ -183,7 +183,8 @@ function Main({ score, setScore }) {
 
     const checkIfWordGuessed = (word, guessedLetters) => {
         return word
-            .split("")
+            .split('')
+            .filter((letter) => letter !== ' ')
             .every((letter) => guessedLetters.includes(letter));
     };
 
@@ -200,10 +201,7 @@ function Main({ score, setScore }) {
         if (attempts >= 9) {
             setIfShowBtnToNext(true);
             setIfShowRightModal(0);
-        } else if (
-            attempts < 9 &&
-            checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])
-        ) {
+        } else if (attempts < 9 && checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])) {
             setIfShowBtnToNext(true);
             setIfShowRightModal(1);
         } else {
@@ -235,7 +233,7 @@ function Main({ score, setScore }) {
         }
         setIfShowRightModal(null); // 모달 상태 초기화
         setAlphabet(
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) => ({
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
                 letter,
                 isRight: false,
                 isClicked: false,
@@ -258,19 +256,14 @@ function Main({ score, setScore }) {
                 <RightColumn>
                     <ThemeCard theme={theme} />
                     <BlankWrapper>
-                        <BlankWord
-                            letter={currentWord}
-                            guessedLetters={guessedLetters}
-                        />
+                        <BlankWord letter={currentWord} guessedLetters={guessedLetters} />
                     </BlankWrapper>
                     <LetterWrapper>
                         {alphabet.map((letter, index) => (
                             <LetterCard
                                 key={index}
                                 letter={letter.letter}
-                                onClick={() =>
-                                    handleLetterBtnClick(letter.letter)
-                                }
+                                onClick={() => handleLetterBtnClick(letter.letter)}
                                 isClicked={letter.isClicked}
                                 isRight={letter.isRight}
                                 ifShow={ifShowBtnToNext}
