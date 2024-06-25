@@ -165,8 +165,8 @@ function Main({ score, setScore }) {
     const [guessedLetters, setGuessedLetters] = useState([]);
     const wordList = useMemo(() => {
       const words = CategorizedWords[theme];
-      const shuffledWords = shuffleArray(words).slice(0, 10);
-      console.log(shuffledWords);
+      const wordsToUse = theme === 'NEXT' ? shuffleArray(words).slice(0, 40) : words;
+      const shuffledWords = shuffleArray(wordsToUse).slice(0, 10);
       return shuffledWords.map((word) => word.toUpperCase());
   }, [theme]);
     const currentWord = wordList[id];
