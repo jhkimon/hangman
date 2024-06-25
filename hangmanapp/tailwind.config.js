@@ -13,11 +13,8 @@ module.exports = {
             fontFamily: {
                 caveat: ['Caveat', 'cursive'],
                 grandstander: ['Grandstander', 'cursive'],
+                kalam: ['Kalam', 'cursive'],
             },
-            theme: {
-                extend: {},
-            },
-            plugins: [],
         },
     },
     plugins: [],
