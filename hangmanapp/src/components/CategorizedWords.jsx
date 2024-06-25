@@ -71,7 +71,7 @@ const CategorizedWords = {
         'Ive',
         'Aespa',
         'ILLIT',
-        'I-DLE',
+        'GIDLE',
         'Seventeen',
         'LE SSERAFIM',
         'Blackpink',
