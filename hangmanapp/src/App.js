@@ -1,18 +1,23 @@
+
 import './App.css';
 import './logo.svg';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Landing from './pages/landing';
+import Theme from './pages/theme';
+import Main from './pages/main';
+import Result from './pages/result';
 
 function App() {
     return (
         <>
-            <div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4">
-                <div class="shrink-0">
-                    <img class="h-12 w-12" src="./logo.svg" alt="ChitChat Logo" />
-                </div>
-                <div>
-                    <div class="text-xl font-medium text-black">ChitChat</div>
-                    <p class="text-slate-500">You have a new message!</p>
-                </div>
-            </div>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/theme" element={<Theme />} />
+                    <Route path="/main" element={<Main />} />
+                    <Route path="/result" element={<Result />} />
+                </Routes>
+            </BrowserRouter>
         </>
     );
 }
