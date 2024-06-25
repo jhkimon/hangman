@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button'; // 경로 확인
 import setTheme from '../App';
+import ClickAudio2 from '../audio/select06.mp3';
+
 const themes = ['Food', 'Country', 'Suneung', 'Idol', 'NEXT', 'Random'];
 
 function Theme() {
