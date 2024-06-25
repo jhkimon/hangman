@@ -18,7 +18,7 @@ function Theme({ theme, setTheme, setScore }) {
 
     return (
         <div className="h-full w-full flex flex-col justify-center items-center mt-20">
-            <h2 className="font-bold text-4xl mb-12">Choose Theme!</h2> {/* 마진 변경 */}
+            <h2 className="font-bold text-4xl mb-12">Choose Theme!</h2>
             <div className="grid grid-cols-2 gap-4">
                 {themes.slice(0, 2).map((theme) => (
                     <Button
@@ -26,7 +26,7 @@ function Theme({ theme, setTheme, setScore }) {
                         letter={theme}
                         onClick={() => handleButtonClick(theme)}
                         setTheme={theme}
-                        className="hover:bg-gray-100" // 기본 hover 스타일 적용
+                        className="hover:bg-gray-100"
                     />
                 ))}
             </div>
