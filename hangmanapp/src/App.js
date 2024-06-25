@@ -16,9 +16,9 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Landing />} />
-                    <Route path="/theme" element={<Theme />} />
-                    <Route path="/main/:theme" element={<Main />} />
-                    <Route path="/result" element={<Result />} />
+                    <Route path="/theme" element={<Theme theme={theme} setTheme={setTheme}/>} />
+                    <Route path="/main/:theme" element={<Main score={score} setScore={setScore}/>} />
+                    <Route path="/result" element={<Result score={score} setScore={setScore} theme={theme} setTheme={setTheme}/>} />
                 </Routes>
             </BrowserRouter>
         </>
