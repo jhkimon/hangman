@@ -11,8 +11,7 @@ module.exports = {
                 pink: colors.fuchsia,
             },
             fontFamily: {
-                caveat: ['Caveat', 'cursive'],
-                grandstander: ['Grandstander', 'cursive'],
+                kalam: ['Kalam', 'cursive'],
             },
             theme: {
                 extend: {},
