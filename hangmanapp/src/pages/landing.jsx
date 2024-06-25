@@ -35,8 +35,8 @@ function Landing() {
 
     return (
         <div
-            className="h-full w-full flex flex-col justify-center items-center"
-            style={{ backgroundColor: '#fcfcfc', minHeight: '80vh' }}
+            className="h-full w-full flex flex-col items-center"
+            style={{ backgroundColor: '#fcfcfc', minHeight: '100vh' }}
         >
             <h1 className="font-kalam font-black tracking-tighter text-center text-6xl mt-10">Hangman</h1>
             <img src={`${process.env.PUBLIC_URL}/img/hangman9.png`} className="w-96" alt="Hangman Image" />{' '}
