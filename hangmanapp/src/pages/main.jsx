@@ -83,6 +83,9 @@ const LetterWrapper = styled.div`
     width: 100%;
     margin: 3%;
 `;
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
 
 const BlankWrapper = styled.div`
     display: flex;
@@ -160,13 +163,12 @@ function Main({ score, setScore }) {
     const [id, setId] = useState(0);
     const [attempts, setAttempts] = useState(1);
     const [guessedLetters, setGuessedLetters] = useState([]);
-    const wordList = useMemo(
-        () =>
-            CategorizedWords[theme]
-                .slice(0, 10)
-                .map((word) => word.toUpperCase()),
-        [theme]
-    );
+    const wordList = useMemo(() => {
+      const words = CategorizedWords[theme];
+      const shuffledWords = shuffleArray(words).slice(0, 10);
+      console.log(shuffledWords);
+      return shuffledWords.map((word) => word.toUpperCase());
+  }, [theme]);
     const currentWord = wordList[id];
     const [ifShowBtnToNext, setIfShowBtnToNext] = useState(false);
     const [ifShowRightModal, setIfShowRightModal] = useState(null); // -1을 null로 변경
@@ -187,10 +189,12 @@ function Main({ score, setScore }) {
 
     const handleLetterBtnClick = (clickedLetter) => {
         if (currentWord.includes(clickedLetter)) {
-            console.log("correct");
+            correctaudio.play();
+            console.log('correct');
             setGuessedLetters((prev) => [...prev, clickedLetter]);
         } else {
-            console.log("wrong");
+            wrongaudio.play();
+            console.log('wrong');
             setAttempts((prev) => prev + 1);
         }
         if (attempts >= 9) {
