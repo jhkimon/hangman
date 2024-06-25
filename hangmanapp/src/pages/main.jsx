@@ -18,11 +18,11 @@ const LetterWrapper = styled.div`
 function Main({ score, setScore }) {
     const { theme } = useParams();
     const [id, setId] = useState(0);
-    const [attempts, setAttempts] = useState(0);
+    const [attempts, setAttempts] = useState(1);
     const [guessedLetters, setGuessedLetters] = useState([]);
     const wordList = useMemo(() => CategorizedWords[theme].slice(0, 10).map((word) => word.toUpperCase()), [theme]);
     const currentWord = wordList[id];
-
+    console.log(currentWord);
     const [alphabet, setAlphabet] = useState(
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter) => ({
             letter,
@@ -37,14 +37,16 @@ function Main({ score, setScore }) {
 
     const handleLetterBtnClick = (clickedLetter) => {
         if (currentWord.includes(clickedLetter)) {
+            console.log('correct')
             setGuessedLetters((prev) => [...prev, clickedLetter]);
         } else {
+            console.log('wrong')
             setAttempts((prev) => prev + 1);
         }
 
-        if (attempts + 1 >= 9) {
+        if (attempts >= 9) {
             setId((prev) => (prev + 1) % wordList.length);
-            setAttempts(0);
+            setAttempts(1);
             setGuessedLetters([]);
             setAlphabet((prevAlphabet) =>
                 prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
@@ -52,7 +54,7 @@ function Main({ score, setScore }) {
         } else if (checkIfWordGuessed(currentWord, [...guessedLetters, clickedLetter])) {
             setScore(score + 200 - 10 * (attempts + 1));
             setId((prev) => (prev + 1) % wordList.length);
-            setAttempts(0);
+            setAttempts(1);
             setGuessedLetters([]);
             setAlphabet((prevAlphabet) =>
                 prevAlphabet.map((letter) => ({ ...letter, isClicked: false, isRight: false }))
@@ -62,10 +64,10 @@ function Main({ score, setScore }) {
                 alphabet.map((letter) =>
                     !letter.isClicked && letter.letter === clickedLetter
                         ? {
-                              ...letter,
-                              isRight: currentWord.includes(clickedLetter),
-                              isClicked: true,
-                          }
+                            ...letter,
+                            isRight: currentWord.includes(clickedLetter),
+                            isClicked: true,
+                        }
                         : letter
                 )
             );
@@ -94,7 +96,7 @@ function Main({ score, setScore }) {
                 <div className="w-1/2 flex items-center flex-col">
                     <ScoreBoard score={score} />
                     <img
-                        src="https://www.shutterstock.com/image-vector/hangman-hang-man-guessing-game-260nw-2179099581.jpg"
+                        src={'https://via.placeholder.com/240x' + (240 + attempts * 20)}
                         alt="hangman"
                     />
                 </div>
