@@ -15,7 +15,7 @@ function Theme() {
     return (
         <div>
             {themes.map((theme) => (
-                <Button key={theme} letter={theme} onClick={() => handleButtonClick(theme)} />
+                <Button key={theme} letter={theme} onClick={() => handleButtonClick(theme)} setTheme={theme} />
             ))}
         </div>
     );
