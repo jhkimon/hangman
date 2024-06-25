@@ -12,13 +12,20 @@ const LetterSpan = styled.div`
     &:active {
         background-color: lightgray;
     }
+    background-color: ${({ isRight, isClicked }) => 
+        !isClicked ? 'white' :
+        isRight ? 'lightgreen' : 'rgb(248 113 113)'};
+    pointer-events: ${({ isClicked }) => isClicked ? 'none' : 'auto'};
+    opacity: ${({ isClicked }) => isClicked ? '0.2' : '1'};
 `;
 
-function LetterCard({ letter, onClick }) {
+function LetterCard({ letter, onClick, isRight, isClicked }) {
     return (
-        <LetterSpan
-            className="text-3xl hover:-translate-y-1 hover:scale-110 ease-in-out transform duration-500"
+        <LetterSpan 
+            className='text-3xl hover:-translate-y-1 hover:scale-110 ease-in-out transform duration-500' 
             onClick={onClick}
+            isRight={isRight}
+            isClicked={isClicked}
         >
             {letter}
         </LetterSpan>
