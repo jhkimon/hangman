@@ -11,10 +11,13 @@ module.exports = {
                 pink: colors.fuchsia,
             },
             fontFamily: {
-                sans: ['Graphik', 'sans-serif'],
-                serif: ['Merriweather', 'serif'],
-                'grandstander': ['"Grandstander"', 'cursive'],
+                caveat: ['Caveat', 'cursive'],
+                grandstander: ['Grandstander', 'cursive'],
             },
+            theme: {
+                extend: {},
+            },
+            plugins: [],
         },
     },
     plugins: [],
