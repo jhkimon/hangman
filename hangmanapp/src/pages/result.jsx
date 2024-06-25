@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 
-function Result({score, useScore}) {
+function Result({score, theme}) {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
@@ -14,6 +14,7 @@ function Result({score, useScore}) {
     return (
         <div className="h-full w-full flex flex-col justify-center items-center">
             <h1 className="font-grandstander font-black tracking-tighter text-center text-6xl mt-10">Congratulation</h1>
+            <p className="font-grandstander font-black tracking-tighter text-center text-4xl mt-10">score: {score}</p>
             <p className="font-grandstander font-black tracking-tighter text-center text-4xl mt-10">score: {score}</p>
             <br />
             <Button onClick={handleButtonClick} letter="restart" overlayClassname=""></Button>
