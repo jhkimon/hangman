@@ -19,7 +19,7 @@ function Landing() {
     return (
         <div className="h-full w-full flex flex-col justify-center items-center">
             <h1 className="font-kalam font-black tracking-tighter text-center text-6xl mt-10">Hangman</h1>
-            <img src={`${process.env.PUBLIC_URL}/img/hangman9.png`} className="w-96 my-5" alt="Hangman Image" />{' '}
+            <img src={`${process.env.PUBLIC_URL}/img/hangman9.png`} className="w-96" alt="Hangman Image" />{' '}
             {/* 이미지 크기 변경 및 마진 조정 */}
             <div className="flex flex-row items-center space-x-4 mt-5">
                 <Button onClick={handleButtonClick} letter="Game Start" />
