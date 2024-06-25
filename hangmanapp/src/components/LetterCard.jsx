@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-
 
 const LetterSpan = styled.div`
     display: inline-block;
@@ -14,18 +12,17 @@ const LetterSpan = styled.div`
     &:active {
         background-color: lightgray;
     }
-
-
-`
+`;
 
 function LetterCard({ letter, onClick }) {
-  return (
-    <>
-        <LetterSpan className='text-3xl hover:-translate-y-1 hover:scale-110 ease-in-out transform duration-500' onClick={onClick}>
+    return (
+        <LetterSpan
+            className="text-3xl hover:-translate-y-1 hover:scale-110 ease-in-out transform duration-500"
+            onClick={onClick}
+        >
             {letter}
         </LetterSpan>
-    </>
-  );
+    );
 }
 
 export default LetterCard;
