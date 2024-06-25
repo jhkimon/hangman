@@ -6,12 +6,13 @@ import ClickAudio1 from '../audio/poka01.mp3';
 const clickaudio1 = new Audio(ClickAudio1);
 const themes = ['Food', 'Country', 'Suneung', 'Idol', 'NEXT'];
 
-function Theme() {
+function Theme({ theme, setTheme, setScore }) {
     const navigate = useNavigate();
-
+    console.log(theme, setTheme, setScore);
     const handleButtonClick = (theme) => {
         clickaudio1.play();
-        console.log('얍');
+        setScore(0); // Reset score on theme change
+        setTheme(theme);
         navigate(`/main/${theme}`);
     };
 
