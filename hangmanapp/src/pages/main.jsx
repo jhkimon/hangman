@@ -7,21 +7,32 @@ import LetterCard from '../components/LetterCard';
 import ThemeCard from '../components/ThemeCard';
 import ScoreBoard from '../components/ScoreBoard';
 
-const ModifiedButton = styled(Button)`
-    margin: 10px;
+const LetterWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 600px;
 `;
 
 const letter = 'apple';
 const theme = 'NEXT';
 
 function Main() {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     return (
         <div>
             <ThemeCard theme={theme} />
             <BlankWord letter={letter} />
             <LetterCard />
+            <ThemeCard />
+            <BlankWord />
+            <LetterWrapper>
+                {alphabet.map((letter, index) => {
+                    return letter ? <LetterCard key={index} letter={letter} /> : null;
+                })}
+            </LetterWrapper>
+
             <ScoreBoard />
-            <ModifiedButton />
         </div>
     );
 }
